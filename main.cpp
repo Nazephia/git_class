@@ -25,6 +25,13 @@ std::vector<Student> readStudents(const std::string& filename) {
     return students;
 }
 
+double average(const std::vector<double>& grades) {
+    if (grades.empty()) return 0.0;
+    double sum = 0.0;
+    for (double g : grades) sum += g;
+    return sum / grades.size();
+}
+
 int main(int argc, char* argv[]) {
     if (argc < 2) {
         std::cerr << "Usage: " << argv[0] << " <grades_file>\n";
@@ -38,7 +45,7 @@ int main(int argc, char* argv[]) {
 
     std::cout << "Grades report\n";
     for (const Student& s : students) {
-        std::cout << s.name << ": " << s.grades.size() << " grades\n";
+        std::cout << s.name << "  avg: " << average(s.grades) << "\n";
     }
     return 0;
 }
