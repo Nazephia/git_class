@@ -1,0 +1,5 @@
+Andrea 15 12 18
+Carlos 8 11 12
+Diana 20 19 17
+Elena 9 14 10
+Pedro 5 7 9
