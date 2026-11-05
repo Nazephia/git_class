@@ -4,6 +4,8 @@
 #include <string>
 #include <vector>
 
+const double PASSING_GRADE = 10.0;
+
 struct Student {
     std::string name;
     std::vector<double> grades;
@@ -48,6 +50,10 @@ double lowest(const std::vector<double>& grades) {
     return worst;
 }
 
+bool passed(const std::vector<double>& grades) {
+    return average(grades) >= PASSING_GRADE;
+}
+
 int main(int argc, char* argv[]) {
     if (argc < 2) {
         std::cerr << "Usage: " << argv[0] << " <grades_file>\n";
@@ -63,7 +69,8 @@ int main(int argc, char* argv[]) {
     for (const Student& s : students) {
         std::cout << s.name << "  avg: " << average(s.grades)
                   << "  max: " << highest(s.grades)
-                  << "  min: " << lowest(s.grades) << "\n";
+                  << "  min: " << lowest(s.grades)
+                  << "  " << (passed(s.grades) ? "PASS" : "FAIL") << "\n";
     }
     return 0;
 }
