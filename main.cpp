@@ -22,12 +22,15 @@ int main(int argc, char* argv[]) {
               << std::setw(7) << "Min"
               << "  Status\n";
     std::cout << std::fixed << std::setprecision(2);
+    std::vector<double> averages;
     for (const Student& s : students) {
+        averages.push_back(average(s.grades));
         std::cout << std::left << std::setw(10) << s.name
                   << std::right << std::setw(9) << average(s.grades)
                   << std::setw(7) << highest(s.grades)
                   << std::setw(7) << lowest(s.grades)
                   << "  " << (passed(s.grades) ? "PASS" : "FAIL") << "\n";
     }
+    std::cout << "\nClass average: " << average(averages) << "\n";
     return 0;
 }
