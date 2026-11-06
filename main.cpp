@@ -1,3 +1,4 @@
+#include <iomanip>
 #include <iostream>
 #include <vector>
 
@@ -14,11 +15,18 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    std::cout << "Grades report\n";
+    std::cout << "Grades report\n\n";
+    std::cout << std::left << std::setw(10) << "Name"
+              << std::right << std::setw(9) << "Average"
+              << std::setw(7) << "Max"
+              << std::setw(7) << "Min"
+              << "  Status\n";
+    std::cout << std::fixed << std::setprecision(2);
     for (const Student& s : students) {
-        std::cout << s.name << "  avg: " << average(s.grades)
-                  << "  max: " << highest(s.grades)
-                  << "  min: " << lowest(s.grades)
+        std::cout << std::left << std::setw(10) << s.name
+                  << std::right << std::setw(9) << average(s.grades)
+                  << std::setw(7) << highest(s.grades)
+                  << std::setw(7) << lowest(s.grades)
                   << "  " << (passed(s.grades) ? "PASS" : "FAIL") << "\n";
     }
     return 0;
