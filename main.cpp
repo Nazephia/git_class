@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <iomanip>
 #include <iostream>
 #include <vector>
@@ -14,6 +15,11 @@ int main(int argc, char* argv[]) {
         std::cerr << "No students found in " << argv[1] << "\n";
         return 1;
     }
+
+    std::sort(students.begin(), students.end(),
+              [](const Student& a, const Student& b) {
+                  return average(a.grades) > average(b.grades);
+              });
 
     std::cout << "Grades report\n\n";
     std::cout << std::left << std::setw(10) << "Name"
