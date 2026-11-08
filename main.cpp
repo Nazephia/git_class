@@ -6,6 +6,7 @@
 
 #include "grades.h"
 
+// Flags CLI
 static void printHelp(const char* prog) {
     std::cout << "Usage: " << prog << " [OPTIONS] <grades_file>\n\n";
     std::cout << "Reads a file of students and their grades and prints a report.\n\n";
