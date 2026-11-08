@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "grades.h"
+#include "./colors/colors.hpp"
 
 // Flags CLI
 static void printHelp(const char* prog) {
@@ -16,6 +17,12 @@ static void printHelp(const char* prog) {
     std::cout << "\nInput format:\n";
     std::cout << "  One student per line: the name followed by their grades.\n";
 }
+
+
+std::ostream& operator<<(std::ostream& os, Color c) {
+    return os << "\033[" << static_cast<int>(c) << "m";
+}
+
 
 static void printVersion() {
     std::cout << "grades report 1.0\n";
@@ -61,22 +68,33 @@ int main(int argc, char* argv[]) {
                   return average(a.grades) > average(b.grades);
               });
 
+    const int colName = 10;
+    const int colAvg = 9;
+    const int colMax = 7;
+    const int colMin = 7;
+    const int colStatus = 6;
+
     std::cout << "Grades report\n\n";
-    std::cout << std::left << std::setw(10) << "Name"
-              << std::right << std::setw(9) << "Average"
-              << std::setw(7) << "Max"
-              << std::setw(7) << "Min"
-              << "  Status\n";
     std::cout << std::fixed << std::setprecision(2);
+
+    std::cout << std::left << std::setw(colName) << "Name"
+              << std::right << std::setw(colAvg) << "Average"
+              << std::setw(colMax) << "Max"
+              << std::setw(colMin) << "Min"
+              << "  " << std::setw(colStatus) << "Status" << "\n";
     std::vector<double> averages;
     for (const Student& s : students) {
         averages.push_back(average(s.grades));
-        std::cout << std::left << std::setw(10) << s.name
-                  << std::right << std::setw(9) << average(s.grades)
-                  << std::setw(7) << highest(s.grades)
-                  << std::setw(7) << lowest(s.grades)
-                  << "  " << (passed(s.grades) ? "PASS" : "FAIL") << "\n";
+        std::cout << std::left << std::setw(colName) << s.name
+                  << std::right << std::setw(colAvg) << average(s.grades)
+                  << std::setw(colMax) << highest(s.grades)
+                  << std::setw(colMin) << lowest(s.grades)
+                  << "  " << (passed(s.grades) ? Color::Green : Color::Red)
+                  << std::left << std::setw(colStatus)
+                  << (passed(s.grades) ? "PASS" : "FAIL")
+                  << Color::Reset << "\n";
     }
+
     std::cout << "\nClass average: " << average(averages) << "\n";
     return 0;
 }
